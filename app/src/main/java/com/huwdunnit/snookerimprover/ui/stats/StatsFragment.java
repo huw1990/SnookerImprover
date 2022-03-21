@@ -1,4 +1,4 @@
-package com.huwdunnit.snookerimprover.ui.home;
+package com.huwdunnit.snookerimprover.ui.stats;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,27 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.huwdunnit.snookerimprover.databinding.FragmentHomeBinding;
+import com.huwdunnit.snookerimprover.databinding.FragmentStatsBinding;
 
 /**
- * Fragment for the home screen, showing all available practice routines.
+ * Fragment for getting stats for a routine.
  *
  * @author Huwdunnit
  */
-public class HomeFragment extends Fragment {
+public class StatsFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentStatsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        StatsViewModel statsViewModel =
+                new ViewModelProvider(this).get(StatsViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentStatsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textStats;
+        statsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
