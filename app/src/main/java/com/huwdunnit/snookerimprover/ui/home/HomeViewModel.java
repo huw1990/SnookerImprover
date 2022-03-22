@@ -4,16 +4,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.huwdunnit.snookerimprover.model.Routine;
+
+import java.util.List;
+
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<List<Routine>> routines;
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        routines = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void setRoutines(List<Routine> routines) {
+        this.routines.setValue(routines);
+    }
+
+    public LiveData<List<Routine>> getRoutines() {
+        return routines;
     }
 }

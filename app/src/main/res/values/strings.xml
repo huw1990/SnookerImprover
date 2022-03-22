@@ -4,4 +4,9 @@
     <string name="title_info">Routine Info</string>
     <string name="title_add_score">Add Score</string>
     <string name="title_stats">Stats</string>
+    <string name="routine_1">The Line Up</string>
+    <string name="routine_2">The T Line Up</string>
+    <string name="routine_3">10 Red T Line Up</string>
+    <string name="routine_4">7 Red T Line Up</string>
+    <string name="routine_5">Clearing the Colours</string>
 </resources>
