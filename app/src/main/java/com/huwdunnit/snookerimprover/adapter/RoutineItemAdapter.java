@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Routine routine = routines.get(position);
         holder.getTitleTextView().setText(context.getResources().getString(routine.getStringResourceId()));
+        holder.getRoutineImageView().setImageResource(routine.getImageResourceId());
     }
 
     @Override
@@ -52,13 +54,20 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
 
         private final TextView titleTextView;
 
+        private final ImageView routineImageView;
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.item_title);
+            routineImageView = itemView.findViewById(R.id.item_image);
         }
 
         TextView getTitleTextView() {
             return titleTextView;
+        }
+
+        ImageView getRoutineImageView() {
+            return routineImageView;
         }
     }
 }
