@@ -9,13 +9,22 @@
         android:id="@+id/navigation_home"
         android:name="com.huwdunnit.snookerimprover.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_to_info"
+            app:destination="@id/navigation_info" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_info"
         android:name="com.huwdunnit.snookerimprover.ui.info.InfoFragment"
         android:label="@string/title_info"
-        tools:layout="@layout/fragment_info" />
+        tools:layout="@layout/fragment_info" >
+        <argument
+            android:name="routine_title_string_res_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_add_score"

@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.model.Routine;
+import com.huwdunnit.snookerimprover.ui.home.HomeFragmentDirections;
 
 import java.util.List;
 
@@ -43,6 +45,10 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
         Routine routine = routines.get(position);
         holder.getTitleTextView().setText(context.getResources().getString(routine.getStringResourceId()));
         holder.getRoutineImageView().setImageResource(routine.getImageResourceId());
+        HomeFragmentDirections.ActionHomeToInfo action = HomeFragmentDirections.actionHomeToInfo();
+        action.setRoutineTitleStringResId(routine.getStringResourceId());
+        holder.getRootView().setOnClickListener(view -> Navigation.findNavController(view).navigate(
+                action));
     }
 
     @Override
@@ -52,14 +58,21 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
 
     protected class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        private final View rootView;
+
         private final TextView titleTextView;
 
         private final ImageView routineImageView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            rootView = itemView.getRootView();
             titleTextView = itemView.findViewById(R.id.item_title);
             routineImageView = itemView.findViewById(R.id.item_image);
+        }
+
+        View getRootView() {
+            return rootView;
         }
 
         TextView getTitleTextView() {
