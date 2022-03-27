@@ -46,7 +46,7 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
         holder.getTitleTextView().setText(context.getResources().getString(routine.getStringResourceId()));
         holder.getRoutineImageView().setImageResource(routine.getImageResourceId());
         HomeFragmentDirections.ActionHomeToInfo action = HomeFragmentDirections.actionHomeToInfo();
-        action.setRoutineTitleStringResId(routine.getStringResourceId());
+        action.setRoutineNumber(position);
         holder.getRootView().setOnClickListener(view -> Navigation.findNavController(view).navigate(
                 action));
     }

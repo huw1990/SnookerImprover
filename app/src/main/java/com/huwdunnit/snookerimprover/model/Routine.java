@@ -1,5 +1,6 @@
 package com.huwdunnit.snookerimprover.model;
 
+import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
@@ -18,9 +19,14 @@ public class Routine {
     @DrawableRes
     private final int imageResourceId;
 
-    public Routine(int stringResourceId, int imageResourceId) {
+    /** The String array resource ID for the various description lines for this routine. */
+    @ArrayRes
+    private final int descArrayResourceId;
+
+    public Routine(int stringResourceId, int imageResourceId, int descArrayResourceId) {
         this.stringResourceId = stringResourceId;
         this.imageResourceId = imageResourceId;
+        this.descArrayResourceId = descArrayResourceId;
     }
 
     public int getStringResourceId() {
@@ -29,5 +35,9 @@ public class Routine {
 
     public int getImageResourceId() {
         return imageResourceId;
+    }
+
+    public int getDescArrayResourceId() {
+        return descArrayResourceId;
     }
 }

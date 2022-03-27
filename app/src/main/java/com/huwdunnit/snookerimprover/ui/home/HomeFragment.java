@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         RecyclerView recyclerView = binding.allRoutinesRecyclerView;
-        List<Routine> routines = new Datasource().loadRoutines();
+        List<Routine> routines = Datasource.getRoutines();
         recyclerView.setAdapter(new RoutineItemAdapter(getContext(), routines));
         recyclerView.setHasFixedSize(true);
         return root;

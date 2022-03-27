@@ -21,9 +21,9 @@
         android:label="@string/title_info"
         tools:layout="@layout/fragment_info" >
         <argument
-            android:name="routine_title_string_res_id"
+            android:name="routine_number"
             app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="0" />
     </fragment>
 
     <fragment

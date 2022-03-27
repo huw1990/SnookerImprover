@@ -4,9 +4,43 @@
     <string name="title_info">Routine Info</string>
     <string name="title_add_score">Add Score</string>
     <string name="title_stats">Stats</string>
+    <string-array name="all_routine_names">
+        <item>The Line Up</item>
+        <item>The T Line Up</item>
+        <item>10 Red T Line Up</item>
+        <item>7 Red T Line Up</item>
+        <item>Clearing the Colours</item>
+    </string-array>
     <string name="routine_1">The Line Up</string>
+    <string-array name="routine_1_desc_array">
+        <item>Arrange all reds in a line up the middle of the table, in line with the blue, pink, and black spots.</item>
+        <item>Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.</item>
+        <item>Can you clear the table?</item>
+    </string-array>
     <string name="routine_2">The T Line Up</string>
+    <string-array name="routine_2_desc_array">
+        <item>Arrange the reds in three lines of five reds, first between pink and black, then either side of the pink, to form a "T" shape.</item>
+        <item>Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.</item>
+        <item>In this routine, all reds are nearer the pink and black, so this replicates what you might see in a match, more than the Line Up would.</item>
+        <item>Can you clear the table?</item>
+    </string-array>
     <string name="routine_3">10 Red T Line Up</string>
+    <string-array name="routine_3_desc_array">
+        <item>A slight variation on the T Line Up. Put four reds in a line between pink and black, then three either side of the pink, to make 10 reds in total.</item>
+        <item>Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.</item>
+        <item>Can you clear the table?</item>
+    </string-array>
     <string name="routine_4">7 Red T Line Up</string>
+    <string-array name="routine_4_desc_array">
+        <item>A slight variation on the T Line Up. Put three reds in a line between pink and black, then two either side of the pink, to make seven reds in total.</item>
+        <item>Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.</item>
+        <item>Can you clear the table?</item>
+    </string-array>
     <string name="routine_5">Clearing the Colours</string>
+    <string-array name="routine_5_desc_array">
+        <item>Put all colours on their spots, then try to clear them in order, i.e. yellow, green, brown, blue, pink, black.</item>
+    </string-array>
+    <string name="routine_desc">Routine</string>
+    <string name="description_text">Description</string>
+    <string name="routine_image_content_desc">Image showing layout of routine</string>
 </resources>

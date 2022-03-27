@@ -13,17 +13,23 @@ import java.util.List;
  */
 public class Datasource {
 
+    private Datasource() {}
+
+    private static List<Routine> ROUTINES;
+
     /**
      * Load all hardcoded practice routines from app resources.
      * @return All practice routines
      */
-    public List<Routine> loadRoutines() {
-        List<Routine> routines = new ArrayList<>();
-        routines.add(new Routine(R.string.routine_1, R.drawable.routine_1));
-        routines.add(new Routine(R.string.routine_2, R.drawable.routine_2));
-        routines.add(new Routine(R.string.routine_3, R.drawable.routine_3));
-        routines.add(new Routine(R.string.routine_4, R.drawable.routine_4));
-        routines.add(new Routine(R.string.routine_5, R.drawable.routine_5));
-        return routines;
+    public static List<Routine> getRoutines() {
+        if (ROUTINES == null) {
+            ROUTINES = new ArrayList<>();
+            ROUTINES.add(new Routine(R.string.routine_1, R.drawable.routine_1, R.array.routine_1_desc_array));
+            ROUTINES.add(new Routine(R.string.routine_2, R.drawable.routine_2, R.array.routine_2_desc_array));
+            ROUTINES.add(new Routine(R.string.routine_3, R.drawable.routine_3, R.array.routine_3_desc_array));
+            ROUTINES.add(new Routine(R.string.routine_4, R.drawable.routine_4, R.array.routine_4_desc_array));
+            ROUTINES.add(new Routine(R.string.routine_5, R.drawable.routine_5, R.array.routine_5_desc_array));
+        }
+        return ROUTINES;
     }
 }
