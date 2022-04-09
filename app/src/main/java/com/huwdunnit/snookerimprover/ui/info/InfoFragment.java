@@ -1,5 +1,6 @@
 package com.huwdunnit.snookerimprover.ui.info;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.huwdunnit.snookerimprover.FullscreenRoutineImageActivity;
 import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.data.Datasource;
 import com.huwdunnit.snookerimprover.databinding.FragmentInfoBinding;
@@ -54,6 +56,12 @@ public class InfoFragment extends Fragment implements AdapterView.OnItemSelected
         //Add on-click listeners for the two buttons
         binding.buttonAddScore.setOnClickListener(view -> Toast.makeText(getContext(), "addScore clicked", Toast.LENGTH_SHORT).show());
         binding.buttonViewStats.setOnClickListener(view -> Toast.makeText(getContext(), "viewStats clicked", Toast.LENGTH_SHORT).show());
+        binding.routineImage.setOnClickListener(view -> {
+            //When the user clicks on the image of the routine, make it fullscreen
+            Intent intent = new Intent(getContext(), FullscreenRoutineImageActivity.class);
+            intent.putExtra(FullscreenRoutineImageActivity.IMAGE_RES_ID, infoViewModel.getRoutineFullScreenImageResId().getValue());
+            startActivity(intent);
+        });
 
         //Set the routine; either the default routine or the one passed in
         updateRoutine();

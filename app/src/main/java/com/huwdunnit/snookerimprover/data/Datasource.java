@@ -24,11 +24,32 @@ public class Datasource {
     public static List<Routine> getRoutines() {
         if (ROUTINES == null) {
             ROUTINES = new ArrayList<>();
-            ROUTINES.add(new Routine(R.string.routine_1, R.drawable.routine_1, R.array.routine_1_desc_array));
-            ROUTINES.add(new Routine(R.string.routine_2, R.drawable.routine_2, R.array.routine_2_desc_array));
-            ROUTINES.add(new Routine(R.string.routine_3, R.drawable.routine_3, R.array.routine_3_desc_array));
-            ROUTINES.add(new Routine(R.string.routine_4, R.drawable.routine_4, R.array.routine_4_desc_array));
-            ROUTINES.add(new Routine(R.string.routine_5, R.drawable.routine_5, R.array.routine_5_desc_array));
+            ROUTINES.add(new Routine.RoutineBuilder()
+                    .setStringResourceId(R.string.routine_1)
+                    .setImageResourceId(R.drawable.routine_1)
+                    .setFullScreenImageResourceId(R.drawable.routine_1_portrait)
+                    .setDescArrayResourceId(R.array.routine_1_desc_array)
+                    .createRoutine());
+            ROUTINES.add(new Routine.RoutineBuilder()
+                    .setStringResourceId(R.string.routine_2)
+                    .setImageResourceId(R.drawable.routine_2)
+                    .setFullScreenImageResourceId(R.drawable.routine_2_portrait)
+                    .setDescArrayResourceId(R.array.routine_2_desc_array).createRoutine());
+            ROUTINES.add(new Routine.RoutineBuilder()
+                    .setStringResourceId(R.string.routine_3)
+                    .setImageResourceId(R.drawable.routine_3)
+                    .setFullScreenImageResourceId(R.drawable.routine_3_portrait)
+                    .setDescArrayResourceId(R.array.routine_3_desc_array).createRoutine());
+            ROUTINES.add(new Routine.RoutineBuilder()
+                    .setStringResourceId(R.string.routine_4)
+                    .setImageResourceId(R.drawable.routine_4)
+                    .setFullScreenImageResourceId(R.drawable.routine_4_portrait)
+                    .setDescArrayResourceId(R.array.routine_4_desc_array).createRoutine());
+            ROUTINES.add(new Routine.RoutineBuilder()
+                    .setStringResourceId(R.string.routine_5)
+                    .setImageResourceId(R.drawable.routine_5)
+                    .setFullScreenImageResourceId(R.drawable.routine_5_portrait)
+                    .setDescArrayResourceId(R.array.routine_5_desc_array).createRoutine());
         }
         return ROUTINES;
     }

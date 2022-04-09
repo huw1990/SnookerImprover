@@ -43,4 +43,5 @@
     <string name="routine_desc">Routine</string>
     <string name="description_text">Description</string>
     <string name="routine_image_content_desc">Image showing layout of routine</string>
+    <string name="title_activity_fullscreen_routine_image">Routine Fullscreen Image</string>
 </resources>
