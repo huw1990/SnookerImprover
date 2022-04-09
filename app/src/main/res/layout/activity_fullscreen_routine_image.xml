@@ -7,10 +7,6 @@
     android:theme="@style/ThemeOverlay.SnookerImprover.FullscreenContainer"
     tools:context=".FullscreenRoutineImageActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-
     <ImageView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -39,8 +35,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:layout_weight="1" />
 
         </LinearLayout>
     </FrameLayout>
