@@ -24,16 +24,44 @@
             android:name="routine_number"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_info_to_stats"
+            app:destination="@id/navigation_stats" />
+        <action
+            android:id="@+id/action_info_to_add_score"
+            app:destination="@id/navigation_add_score" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_add_score"
         android:name="com.huwdunnit.snookerimprover.ui.addscore.AddScoreFragment"
         android:label="@string/title_add_score"
-        tools:layout="@layout/fragment_add_score" />
+        tools:layout="@layout/fragment_add_score" >
+        <argument
+            android:name="routine_number"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_add_score_to_info"
+            app:destination="@id/navigation_info" />
+        <action
+            android:id="@+id/action_add_score_to_stats"
+            app:destination="@id/navigation_stats" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_stats"
         android:name="com.huwdunnit.snookerimprover.ui.stats.StatsFragment"
         android:label="@string/title_stats"
-        tools:layout="@layout/fragment_stats" />
+        tools:layout="@layout/fragment_stats" >
+        <argument
+            android:name="routine_number"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_stats_to_info"
+            app:destination="@id/navigation_info" />
+        <action
+            android:id="@+id/action_stats_to_add_score"
+            app:destination="@id/navigation_add_score" />
+    </fragment>
 </navigation>

@@ -4,21 +4,16 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.huwdunnit.snookerimprover.model.Routine;
+import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineViewModel;
 
-public class InfoViewModel extends ViewModel {
-
-    private final MutableLiveData<Integer> routineImageResId;
-
-    private final MutableLiveData<Integer> routineFullScreenImageResId;
+public class InfoViewModel extends ChangeableRoutineViewModel {
 
     private final MutableLiveData<String> routineDesc;
 
     public InfoViewModel() {
-        routineImageResId = new MutableLiveData<>();
-        routineFullScreenImageResId = new MutableLiveData<>();
+        super();
         routineDesc = new MutableLiveData<>();
     }
 
@@ -26,17 +21,9 @@ public class InfoViewModel extends ViewModel {
         return routineDesc;
     }
 
-    public LiveData<Integer> getRoutineImageResId() {
-        return routineImageResId;
-    }
-
-    public LiveData<Integer> getRoutineFullScreenImageResId() {
-        return routineFullScreenImageResId;
-    }
-
+    @Override
     public void setRoutine(Routine routine, Context context) {
-        routineImageResId.setValue(routine.getImageResourceId());
-        routineFullScreenImageResId.setValue(routine.getFullScreenImageResourceId());
+        super.setRoutine(routine, context);
         String[] routineDescSteps = context.getResources().getStringArray(routine.getDescArrayResourceId());
         StringBuilder stepsBuilder = new StringBuilder();
         for (String step : routineDescSteps) {

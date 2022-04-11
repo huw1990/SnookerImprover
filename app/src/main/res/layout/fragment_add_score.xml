@@ -7,16 +7,108 @@
     tools:context=".ui.addscore.AddScoreFragment">
 
     <TextView
-        android:id="@+id/text_add_score"
-        android:layout_width="match_parent"
+        android:id="@+id/spinner_desc"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingTop="8dp"
+        android:text="@string/routine_desc"
+        android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/routine_name_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        android:background="@drawable/rounded_corner_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner_desc"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/routine_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/routine_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/routine_image_content_desc"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toBottomOf="@+id/routine_name_spinner" />
+
+    <TextView
+        android:id="@+id/routine_add_score_title"
+        android:layout_width="0dp"
+        android:gravity="start"
+        android:layout_height="wrap_content"
+        android:text="@string/title_add_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routine_image"
+        android:textAppearance="?attr/textAppearanceHeadline6" />
+
+    <TextView
+        android:id="@+id/score_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/score_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/routine_add_score_title" />
+
+    <EditText
+        android:id="@+id/entered_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="0"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/score_label"
+        app:layout_constraintTop_toBottomOf="@+id/routine_add_score_title" />
+
+    <Button
+        android:id="@+id/submit_score_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_score"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/entered_score" />
+
+    <Button
+        android:id="@+id/button_view_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginStart="16dp"
+        android:padding="16dp"
+        android:text="@string/title_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.4"/>
+
+    <Button
+        android:id="@+id/button_view_stats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="60dp"
+        android:padding="16dp"
+        android:text="@string/title_stats"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
