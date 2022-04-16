@@ -1,5 +1,6 @@
 package com.huwdunnit.snookerimprover.ui.info;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.huwdunnit.snookerimprover.FullscreenRoutineImageActivity;
 import com.huwdunnit.snookerimprover.databinding.FragmentInfoBinding;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
@@ -41,11 +43,9 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
                 .setContext(getContext())
-                .setLifecycleOwner(getViewLifecycleOwner())
                 .setViewModel(infoViewModel)
                 .setCallback(this)
                 .setSpinner(binding.routineNameSpinner)
-                .setRoutineImageView(binding.routineImage)
                 .setAddScoreButton(binding.buttonAddScore)
                 .setViewStatsButton(binding.buttonViewStats)
                 .setStartingRoutineNumber(startingRoutineNumber)
@@ -53,6 +53,16 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
         routineChangeHandler.setupHandling();
 
         //Set up LiveData for the fields specific to this fragment
+
+        infoViewModel.getRoutineImageResId().observe(getViewLifecycleOwner(), binding.routineImage::setImageResource);
+
+        binding.routineImage.setOnClickListener(view -> {
+            //When the user clicks on the image of the routine, make it fullscreen
+            Intent intent = new Intent(getContext(), FullscreenRoutineImageActivity.class);
+            intent.putExtra(FullscreenRoutineImageActivity.IMAGE_RES_ID, infoViewModel.getRoutineFullScreenImageResId().getValue());
+            getContext().startActivity(intent);
+        });
+
         infoViewModel.getRoutineDesc().observe(getViewLifecycleOwner(), binding.routineDesc::setText);
 
         return root;

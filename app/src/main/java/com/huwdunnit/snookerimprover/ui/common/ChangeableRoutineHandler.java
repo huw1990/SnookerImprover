@@ -1,17 +1,12 @@
 package com.huwdunnit.snookerimprover.ui.common;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
-import androidx.lifecycle.LifecycleOwner;
-
-import com.huwdunnit.snookerimprover.FullscreenRoutineImageActivity;
 import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.data.Datasource;
 import com.huwdunnit.snookerimprover.model.Routine;
@@ -25,15 +20,11 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
 
     private final Context context;
 
-    private final LifecycleOwner lifecycleOwner;
-
     private final ChangeableRoutineViewModel viewModel;
 
     private final RoutineChangeCallback callback;
 
     private final Spinner spinner;
-
-    private final ImageView routineImageView;
 
     private final Button addScoreButton;
 
@@ -47,18 +38,14 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
      * Private constructor, to prevent direct instantiation (the internal HandlerBuilder should be
      * used instead).
      */
-    private ChangeableRoutineHandler(Context context, LifecycleOwner lifecycleOwner,
-                                     ChangeableRoutineViewModel viewModel,
+    private ChangeableRoutineHandler(Context context, ChangeableRoutineViewModel viewModel,
                                      RoutineChangeCallback callback, Spinner spinner,
-                                     ImageView routineImageView, Button addScoreButton,
-                                     Button viewStatsButton, Button viewInfoButton,
-                                     int startingRoutineNumber) {
+                                     Button addScoreButton, Button viewStatsButton,
+                                     Button viewInfoButton, int startingRoutineNumber) {
         this.context = context;
-        this.lifecycleOwner = lifecycleOwner;
         this.viewModel = viewModel;
         this.callback = callback;
         this.spinner = spinner;
-        this.routineImageView = routineImageView;
         this.addScoreButton = addScoreButton;
         this.viewStatsButton = viewStatsButton;
         this.viewInfoButton = viewInfoButton;
@@ -73,9 +60,6 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //Set the LiveData members on the ViewModel to update the relevant UI components
-        viewModel.getRoutineImageResId().observe(lifecycleOwner, routineImageView::setImageResource);
-
         //Add on-click listeners for the two buttons
         if (addScoreButton != null) {
             addScoreButton.setOnClickListener(view -> callback.navigateToAddScoreScreen(routineNumber));
@@ -86,13 +70,6 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         if (viewInfoButton != null) {
             viewInfoButton.setOnClickListener(view -> callback.navigateToInfoScreen(routineNumber));
         }
-
-        routineImageView.setOnClickListener(view -> {
-            //When the user clicks on the image of the routine, make it fullscreen
-            Intent intent = new Intent(context, FullscreenRoutineImageActivity.class);
-            intent.putExtra(FullscreenRoutineImageActivity.IMAGE_RES_ID, viewModel.getRoutineFullScreenImageResId().getValue());
-            context.startActivity(intent);
-        });
 
         //Set the routine; either the default routine or the one passed in
         updateRoutine();
@@ -125,11 +102,9 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
      */
     public static class HandlerBuilder {
         Context context;
-        LifecycleOwner lifecycleOwner;
         ChangeableRoutineViewModel viewModel;
         RoutineChangeCallback callback;
         Spinner spinner;
-        ImageView routineImageView;
         Button addScoreButton;
         Button viewStatsButton;
         Button viewInfoButton;
@@ -137,11 +112,6 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
 
         public ChangeableRoutineHandler.HandlerBuilder setContext(Context context) {
             this.context = context;
-            return this;
-        }
-
-        public ChangeableRoutineHandler.HandlerBuilder setLifecycleOwner(LifecycleOwner lifecycleOwner) {
-            this.lifecycleOwner = lifecycleOwner;
             return this;
         }
 
@@ -157,11 +127,6 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
 
         public ChangeableRoutineHandler.HandlerBuilder setSpinner(Spinner spinner) {
             this.spinner = spinner;
-            return this;
-        }
-
-        public ChangeableRoutineHandler.HandlerBuilder setRoutineImageView(ImageView routineImageView) {
-            this.routineImageView = routineImageView;
             return this;
         }
 
@@ -186,9 +151,8 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         }
 
         public ChangeableRoutineHandler createHandler() {
-            return new ChangeableRoutineHandler(context, lifecycleOwner, viewModel, callback,
-                    spinner, routineImageView, addScoreButton, viewStatsButton,
-                    viewInfoButton, startingRoutineNumber);
+            return new ChangeableRoutineHandler(context, viewModel, callback, spinner,
+                    addScoreButton, viewStatsButton, viewInfoButton, startingRoutineNumber);
         }
     }
 }

@@ -7,13 +7,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.databinding.FragmentAddScoreBinding;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
+import com.huwdunnit.snookerimprover.ui.common.DatePickerFragment;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
+import com.huwdunnit.snookerimprover.ui.common.TimePickerFragment;
 
 /**
  * Fragment for adding a new score for a routine.
@@ -39,16 +43,33 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
                 .setContext(getContext())
-                .setLifecycleOwner(getViewLifecycleOwner())
                 .setViewModel(addScoreViewModel)
                 .setCallback(this)
                 .setSpinner(binding.routineNameSpinner)
-                .setRoutineImageView(binding.routineImage)
                 .setViewInfoButton(binding.buttonViewInfo)
                 .setViewStatsButton(binding.buttonViewStats)
                 .setStartingRoutineNumber(startingRoutineNumber)
                 .createHandler();
         routineChangeHandler.setupHandling();
+
+        //Track the changes to the score field
+        addScoreViewModel.getScore().observe(getViewLifecycleOwner(), binding.enteredScore::setText);
+
+        //Handle the date field, by showing a date picker on click, and formatting the entered date
+        addScoreViewModel.setDateFormat(getContext().getResources().getString(R.string.date_format));
+        addScoreViewModel.setTodayLabel(getContext().getResources().getString(R.string.today_label));
+        addScoreViewModel.getDate().observe(getViewLifecycleOwner(), binding.enteredDate::setText);
+        binding.enteredDate.setOnClickListener(view -> {
+            DialogFragment newFragment = new DatePickerFragment(addScoreViewModel);
+            newFragment.show(getParentFragmentManager(), "datePicker");
+        });
+
+        //Handle the time field, by showing a time picker on click, and formatting the entered time
+        addScoreViewModel.getTime().observe(getViewLifecycleOwner(), binding.enteredTime::setText);
+        binding.enteredTime.setOnClickListener(view -> {
+            DialogFragment newFragment = new TimePickerFragment(addScoreViewModel);
+            newFragment.show(getParentFragmentManager(), "timePicker");
+        });
 
         return root;
     }

@@ -2,8 +2,6 @@ package com.huwdunnit.snookerimprover.ui.common;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.huwdunnit.snookerimprover.model.Routine;
@@ -14,27 +12,12 @@ import com.huwdunnit.snookerimprover.model.Routine;
  *
  * @author Huwdunnit
  */
-public class ChangeableRoutineViewModel extends ViewModel {
+public abstract class ChangeableRoutineViewModel extends ViewModel {
 
-    private final MutableLiveData<Integer> routineImageResId;
-
-    private final MutableLiveData<Integer> routineFullScreenImageResId;
-
-    public ChangeableRoutineViewModel() {
-        routineImageResId = new MutableLiveData<>();
-        routineFullScreenImageResId = new MutableLiveData<>();
-    }
-
-    public LiveData<Integer> getRoutineImageResId() {
-        return routineImageResId;
-    }
-
-    public LiveData<Integer> getRoutineFullScreenImageResId() {
-        return routineFullScreenImageResId;
-    }
-
-    public void setRoutine(Routine routine, Context context) {
-        routineImageResId.setValue(routine.getImageResourceId());
-        routineFullScreenImageResId.setValue(routine.getFullScreenImageResourceId());
-    }
+    /**
+     * Handle the underlying routine being changed.
+     * @param routine The new routine that's been selected
+     * @param context The context
+     */
+    public abstract void setRoutine(Routine routine, Context context);
 }

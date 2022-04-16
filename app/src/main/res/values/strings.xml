@@ -46,4 +46,8 @@
     <string name="title_activity_fullscreen_routine_image">Routine Fullscreen Image</string>
     <string name="score_label">Score</string>
     <string name="submit_score">Submit</string>
+    <string name="date_label">Date</string>
+    <string name="time_label">Time</string>
+    <string name="today_label">Today</string>
+    <string name="date_format">dd/MM/yyyy</string>
 </resources>
