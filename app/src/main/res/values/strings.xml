@@ -50,4 +50,8 @@
     <string name="time_label">Time</string>
     <string name="today_label">Today</string>
     <string name="date_format">dd/MM/yyyy</string>
+    <string name="enter_score_help">Enter score here</string>
+    <string name="enter_valid_score_help">Please enter a valid score</string>
+    <string name="success_message">Success!</string>
+    <string name="failure_try_again_message">An error occurred. Please try again</string>
 </resources>

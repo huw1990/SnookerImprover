@@ -8,17 +8,18 @@ import android.widget.TimePicker;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.huwdunnit.snookerimprover.model.Routine;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class AddScoreViewModel extends ChangeableRoutineViewModel implements
+public class AddScoreViewModel extends ViewModel implements ChangeableRoutineViewModel,
         TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
-
-    private final MutableLiveData<Integer> score;
 
     private final MutableLiveData<String> date;
 
@@ -30,7 +31,6 @@ public class AddScoreViewModel extends ChangeableRoutineViewModel implements
 
     public AddScoreViewModel() {
         super();
-        score = new MutableLiveData<>();
         date = new MutableLiveData<>();
         time = new MutableLiveData<>();
 
@@ -41,16 +41,36 @@ public class AddScoreViewModel extends ChangeableRoutineViewModel implements
         setTime(hour, minute);
     }
 
-    public LiveData<Integer> getScore() {
-        return score;
-    }
-
     public LiveData<String> getDate() {
         return date;
     }
 
     public LiveData<String> getTime() {
         return time;
+    }
+
+    public Date getFullDateAndTime() {
+        final Calendar c = Calendar.getInstance();
+        if (date.getValue().equals(todayLabel)) {
+            //Do nothing, calendar instance will be set to today's date
+        } else {
+            //Set the selected date in the calendar
+            SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+            try {
+                Date dateObj = dateFormat.parse(date.getValue());
+                c.setTime(dateObj);
+            } catch (ParseException | NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        //Split the time String, then set the correct hours and minutes on the calendar
+        String[] hoursAndMinutes = time.getValue().split(":");
+        c.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hoursAndMinutes[0]));
+        c.set(Calendar.MINUTE, Integer.parseInt(hoursAndMinutes[1]));
+
+        //Convert the calendar to a date
+        return c.getTime();
     }
 
     @Override
@@ -64,6 +84,7 @@ public class AddScoreViewModel extends ChangeableRoutineViewModel implements
 
     void setTodayLabel(String todayLabel) {
         this.todayLabel = todayLabel;
+        this.date.setValue(todayLabel);
     }
 
     @Override

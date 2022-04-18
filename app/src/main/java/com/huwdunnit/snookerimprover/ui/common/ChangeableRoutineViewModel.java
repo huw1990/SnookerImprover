@@ -12,12 +12,12 @@ import com.huwdunnit.snookerimprover.model.Routine;
  *
  * @author Huwdunnit
  */
-public abstract class ChangeableRoutineViewModel extends ViewModel {
+public interface ChangeableRoutineViewModel {
 
     /**
      * Handle the underlying routine being changed.
      * @param routine The new routine that's been selected
      * @param context The context
      */
-    public abstract void setRoutine(Routine routine, Context context);
+    public void setRoutine(Routine routine, Context context);
 }
