@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.data.ScoreRepository;
 import com.huwdunnit.snookerimprover.databinding.FragmentAddScoreBinding;
-import com.huwdunnit.snookerimprover.model.Score;
+import com.huwdunnit.snookerimprover.model.RoutineScore;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
 import com.huwdunnit.snookerimprover.ui.common.DatePickerFragment;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
@@ -99,12 +99,12 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
 
             //Validation passed, now enter the score in the DB
             ScoreRepository repo = new ScoreRepository(getContext());
-            Score score = new Score();
-            score.setScore(scoreValue);
-            score.setRoutineName(routineChangeHandler.getSelectedRoutineName());
-            score.setDateTime(addScoreViewModel.getFullDateAndTime());
-            Log.e(TAG, "Score to submit=" + score);
-            repo.insert(score, () -> {
+            RoutineScore routineScore = new RoutineScore();
+            routineScore.setScore(scoreValue);
+            routineScore.setRoutineName(routineChangeHandler.getSelectedRoutineName());
+            routineScore.setDateTime(addScoreViewModel.getFullDateAndTime());
+            Log.e(TAG, "Score to submit=" + routineScore);
+            repo.insert(routineScore, () -> {
                 showInsertResult(view, true);
             }, () -> {
                 showInsertResult(view, false);

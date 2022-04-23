@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.huwdunnit.snookerimprover.model.Score;
+import com.huwdunnit.snookerimprover.model.RoutineScore;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  *
  * @author Huwdunnit
  */
-@Database(entities = {Score.class}, version = 1, exportSchema = false)
+@Database(entities = {RoutineScore.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author Huwdunnit
  */
 @Entity
-public class Score {
+public class RoutineScore {
 
     @PrimaryKey (autoGenerate = true)
     private int id;
@@ -69,8 +69,8 @@ public class Score {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score1 = (Score) o;
-        return id == score1.id && score == score1.score && Objects.equals(routineName, score1.routineName) && Objects.equals(dateTime, score1.dateTime);
+        RoutineScore routineScore1 = (RoutineScore) o;
+        return id == routineScore1.id && score == routineScore1.score && Objects.equals(routineName, routineScore1.routineName) && Objects.equals(dateTime, routineScore1.dateTime);
     }
 
     @Override
