@@ -3,10 +3,14 @@ package com.huwdunnit.snookerimprover.data;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.huwdunnit.snookerimprover.model.RoutineScore;
 import com.huwdunnit.snookerimprover.model.RoutineScoreStats;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -99,6 +103,65 @@ public class ScoreRepository {
                 successCallback.accept(routineStats);
             } catch (Exception ex) {
                 Log.e("Error getting stats for routine, ex={}", ex.getMessage());
+                ex.printStackTrace();
+                errorCallback.run();
+            }
+        });
+    }
+
+    /**
+     * Get all scores for a particular routine.
+     * @param routineName The name of the routine
+     * @return A LiveData object encapsulating a List of RoutineScore objects
+     */
+    public LiveData<List<RoutineScore>> getAllScoresForRoutine(String routineName) {
+        /* Returning LiveData means the data is loaded asynchronously, so we don't need to
+        * execute this query in a thread from the thread pool. */
+        return scoreDao.loadAllForRoutine(routineName);
+    }
+
+    /**
+     * Delete a set of scores that have previously been entered.
+     * @param scores The scores to delete
+     * @param successCallback A callback if the operation is a success, providing the number of
+     *                        deleted scores
+     * @param errorCallback A callback if the operation fails
+     */
+    public void deleteMultipleScores(Set<RoutineScore> scores, Consumer<Integer> successCallback,
+                                     Runnable errorCallback) {
+        Log.d(TAG, "deleteMultipleScores, scores=" + scores);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            Log.d(TAG, "Deleting " + scores.size() + " scores");
+            try {
+                scoreDao.delete(scores.toArray(new RoutineScore[0]));
+                Log.d(TAG, "Delete successful, notifying callback now");
+                successCallback.accept(scores.size());
+            } catch (Exception ex) {
+                Log.e("Error deleting scores from the DB, ex={}", ex.getMessage());
+                ex.printStackTrace();
+                errorCallback.run();
+            }
+        });
+    }
+
+    /**
+     * Check if we have any scores for a particular routine.
+     * @param routineName The name of the routine
+     * @param successCallback A callback if the operation was a success, providing a boolean to
+     *                        indicate whether we have attempts for the routine
+     * @param errorCallback A callback if the operation fails
+     */
+    public void haveAnyScoresForRoutine(String routineName, Consumer<Boolean> successCallback,
+                                        Runnable errorCallback) {
+        Log.d(TAG, "haveAnyScoresForRoutine, routineName=" + routineName);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            Log.d(TAG, "Getting best score for routine=" + routineName);
+            try {
+                RoutineScore bestScore = scoreDao.getBestScoreForRoutine(routineName);
+                Log.d(TAG, "Best score=" + bestScore);
+                successCallback.accept(bestScore != null);
+            } catch (Exception ex) {
+                Log.e("Error checking if we have any scores for a routine, ex={}", ex.getMessage());
                 ex.printStackTrace();
                 errorCallback.run();
             }

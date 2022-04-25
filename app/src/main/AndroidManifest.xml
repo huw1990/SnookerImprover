@@ -10,17 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SnookerImprover">
         <activity
+            android:name=".ui.stats.allscores.RoutineScoresListActivity"
+            android:exported="false" />
+        <activity
             android:name=".FullscreenRoutineImageActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_fullscreen_routine_image"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.SnookerImprover.Fullscreen" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

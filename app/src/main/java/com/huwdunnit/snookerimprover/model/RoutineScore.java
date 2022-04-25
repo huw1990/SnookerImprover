@@ -77,4 +77,12 @@ public class RoutineScore {
     public int hashCode() {
         return Objects.hash(id, routineName, score, dateTime);
     }
+
+    /**
+     * Get the score, but as a String rather than an int.
+     * @return The score, as a String
+     */
+    public String getScoreString() {
+        return String.valueOf(score);
+    }
 }

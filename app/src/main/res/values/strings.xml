@@ -68,7 +68,8 @@
         <item>Last 60 days</item>
         <item>Last 30 days</item>
         <item>Last 10 days</item>
-    </string-array> <string-array name="time_periods_numbers">
+    </string-array>
+    <string-array name="time_periods_numbers">
         <item>-1</item>
         <item>120</item>
         <item>90</item>
@@ -78,4 +79,11 @@
     </string-array>
     <string name="view_on_graph_label">View on Graph</string>
     <string name="no_previous_attempts_label">No previous attempts</string>
+    <string name="select_to_delete_label">Click a row to select</string>
+    <string name="delete_label">Delete</string>
+    <string name="selected_label">selected</string>
+    <string name="deleted_label">deleted</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_scores_question">Are you sure you want to delete?</string>
 </resources>

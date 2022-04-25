@@ -1,5 +1,6 @@
 package com.huwdunnit.snookerimprover.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -24,7 +25,7 @@ public interface ScoreDao {
      * @return A list of all scores for that routine
      */
     @Query("SELECT * FROM RoutineScore WHERE routineName = :name")
-    List<RoutineScore> loadAllForRoutine(String name);
+    LiveData<List<RoutineScore>> loadAllForRoutine(String name);
 
     /**
      * Get the number of times a routine has been attempted by the user.
@@ -85,9 +86,9 @@ public interface ScoreDao {
     void insert(RoutineScore routineScore);
 
     /**
-     * Delete the provided score from the DB.
-     * @param routineScore The routine to delete
+     * Delete the provided scores from the DB.
+     * @param routineScores The routine scores to delete
      */
     @Delete
-    void delete(RoutineScore routineScore);
+    void delete(RoutineScore... routineScores);
 }

@@ -60,6 +60,15 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         return context.getResources().getString(Datasource.getRoutines().get(routineNumber).getStringResourceId());
     }
 
+    /**
+     * Get the number of the currently selected routine, i.e. the position in the list of Routines
+     * returned from {@link Datasource#getRoutines()}.
+     * @return The routine number
+     */
+    public int getSelectedRoutineNumber() {
+        return routineNumber;
+    }
+
     public void setupHandling() {
         //Set up the Spinner for selecting the routine
         spinner.setOnItemSelectedListener(this);

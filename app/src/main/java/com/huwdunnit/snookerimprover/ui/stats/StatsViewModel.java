@@ -27,6 +27,12 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
 
     private final MutableLiveData<String> averageScore;
 
+    /**
+     * If there are no scores for the routine at all, the button to view all attempts should be
+     * disabled.
+     */
+    private final MutableLiveData<Boolean> haveAttemptsToView;
+
     private String unknownLabel;
 
     private String loadingLabel;
@@ -46,6 +52,8 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
         numberOfAttempts = new MutableLiveData<>();
         bestScore = new MutableLiveData<>();
         averageScore = new MutableLiveData<>();
+        haveAttemptsToView = new MutableLiveData<>();
+        haveAttemptsToView.setValue(false);
     }
 
     public LiveData<String> getNumberOfAttempts() {
@@ -58,6 +66,10 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
 
     public LiveData<String> getAverageScore() {
         return averageScore;
+    }
+
+    public LiveData<Boolean> getHaveAttemptsToView() {
+        return haveAttemptsToView;
     }
 
     public void setUnknownLabel(String unknownLabel) {
@@ -85,6 +97,13 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
         synchronized (this) {
             this.routineName = context.getResources().getString(routine.getStringResourceId());
         }
+        //Routine changed, so check if we have any scores ever for this routine
+        scoreRepository.haveAnyScoresForRoutine(routineName, haveRoutines -> {
+            this.haveAttemptsToView.postValue(haveRoutines);
+        }, () -> {
+            //Unable to check DB, so just disable this button
+            this.haveAttemptsToView.postValue(false);
+        });
         reloadStats();
     }
 

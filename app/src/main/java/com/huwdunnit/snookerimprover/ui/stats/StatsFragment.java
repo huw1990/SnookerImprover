@@ -1,5 +1,6 @@
 package com.huwdunnit.snookerimprover.ui.stats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.huwdunnit.snookerimprover.data.ScoreRepository;
 import com.huwdunnit.snookerimprover.databinding.FragmentStatsBinding;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
+import com.huwdunnit.snookerimprover.ui.stats.allscores.RoutineScoresListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
         statsViewModel.getNumberOfAttempts().observe(getViewLifecycleOwner(), binding.numberAttemptsValue::setText);
         statsViewModel.getBestScore().observe(getViewLifecycleOwner(), binding.bestValue::setText);
         statsViewModel.getAverageScore().observe(getViewLifecycleOwner(), binding.averageValue::setText);
+        statsViewModel.getHaveAttemptsToView().observe(getViewLifecycleOwner(), binding.viewAllScoresButton::setEnabled);
 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
@@ -89,8 +92,12 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.statsPeriodSpinner.setAdapter(adapter);
 
-        //Finally, reload the stats on the ViewModel, since we've updated values recently
-        statsViewModel.reloadStats();
+        binding.viewAllScoresButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), RoutineScoresListActivity.class);
+            intent.putExtra(RoutineScoresListActivity.SELECTED_ROUTINE_ID,
+                    routineChangeHandler.getSelectedRoutineNumber());
+            getContext().startActivity(intent);
+        });
 
         return root;
     }
@@ -99,6 +106,16 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         startingRoutineNumber = StatsFragmentArgs.fromBundle(getArguments()).getRoutineNumber();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /* Reload the stats to update the UI. Using the onResume part of the lifecycle ensures
+        * the stats are reloaded when returning from the RoutineScoresListActivity screen as well
+        * as when this screen first loads. */
+        statsViewModel.reloadStats();
     }
 
     @Override
