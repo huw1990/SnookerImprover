@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.huwdunnit.snookerimprover.R;
@@ -134,14 +135,16 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
     public void navigateToInfoScreen(int routineNumber) {
         StatsFragmentDirections.ActionStatsToInfo action = StatsFragmentDirections.actionStatsToInfo();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_stats, true).build());
     }
 
     @Override
     public void navigateToAddScoreScreen(int routineNumber) {
         StatsFragmentDirections.ActionStatsToAddScore action = StatsFragmentDirections.actionStatsToAddScore();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_stats, true).build());
     }
 
     @Override

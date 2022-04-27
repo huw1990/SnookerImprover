@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,8 +48,8 @@ public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.
         holder.getRoutineImageView().setImageResource(routine.getImageResourceId());
         HomeFragmentDirections.ActionHomeToInfo action = HomeFragmentDirections.actionHomeToInfo();
         action.setRoutineNumber(position);
-        holder.getRootView().setOnClickListener(view -> Navigation.findNavController(view).navigate(
-                action));
+        holder.getRootView().setOnClickListener(view -> Navigation.findNavController(view).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_home, true).build()));
     }
 
     @Override

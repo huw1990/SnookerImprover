@@ -10,9 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.huwdunnit.snookerimprover.FullscreenRoutineImageActivity;
+import com.huwdunnit.snookerimprover.R;
 import com.huwdunnit.snookerimprover.databinding.FragmentInfoBinding;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
@@ -85,7 +87,8 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
     public void navigateToStatsScreen(int routineNumber) {
         InfoFragmentDirections.ActionInfoToStats action = InfoFragmentDirections.actionInfoToStats();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_info, true).build());
     }
 
     @Override
@@ -97,6 +100,7 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
     public void navigateToAddScoreScreen(int routineNumber) {
         InfoFragmentDirections.ActionInfoToAddScore action = InfoFragmentDirections.actionInfoToAddScore();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_info, true).build());
     }
 }

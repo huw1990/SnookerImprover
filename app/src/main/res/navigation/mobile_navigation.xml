@@ -26,10 +26,12 @@
             android:defaultValue="0" />
         <action
             android:id="@+id/action_info_to_stats"
-            app:destination="@id/navigation_stats" />
+            app:destination="@id/navigation_stats"
+            app:popUpTo="@id/navigation_add_score" />
         <action
             android:id="@+id/action_info_to_add_score"
-            app:destination="@id/navigation_add_score" />
+            app:destination="@id/navigation_add_score"
+            app:popUpTo="@id/navigation_add_score" />
     </fragment>
 
     <fragment

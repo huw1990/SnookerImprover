@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -147,14 +148,16 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
     public void navigateToStatsScreen(int routineNumber) {
         AddScoreFragmentDirections.ActionAddScoreToStats action = AddScoreFragmentDirections.actionAddScoreToStats();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_add_score, true).build());
     }
 
     @Override
     public void navigateToInfoScreen(int routineNumber) {
         AddScoreFragmentDirections.ActionAddScoreToInfo action = AddScoreFragmentDirections.actionAddScoreToInfo();
         action.setRoutineNumber(routineNumber);
-        Navigation.findNavController(requireView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action,
+                new NavOptions.Builder().setPopUpTo(R.id.navigation_add_score, true).build());
     }
 
     @Override
