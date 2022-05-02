@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/fullscreenBackgroundColor"
-    android:theme="@style/ThemeOverlay.SnookerImprover.FullscreenContainer"
+    android:theme="@style/ThemeOverlay.SnookerUp.FullscreenContainer"
     tools:context=".FullscreenRoutineImageActivity">
 
     <ImageView
@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
-            style="@style/Widget.Theme.SnookerImprover.ButtonBar.Fullscreen"
+            style="@style/Widget.Theme.SnookerUp.ButtonBar.Fullscreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"

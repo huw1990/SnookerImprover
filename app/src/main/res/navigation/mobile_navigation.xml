@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.huwdunnit.snookerimprover.ui.home.HomeFragment"
+        android:name="com.snookerup.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_info"
-        android:name="com.huwdunnit.snookerimprover.ui.info.InfoFragment"
+        android:name="com.snookerup.ui.info.InfoFragment"
         android:label="@string/title_info"
         tools:layout="@layout/fragment_info" >
         <argument
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/navigation_add_score"
-        android:name="com.huwdunnit.snookerimprover.ui.addscore.AddScoreFragment"
+        android:name="com.snookerup.ui.addscore.AddScoreFragment"
         android:label="@string/title_add_score"
         tools:layout="@layout/fragment_add_score" >
         <argument
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_stats"
-        android:name="com.huwdunnit.snookerimprover.ui.stats.StatsFragment"
+        android:name="com.snookerup.ui.stats.StatsFragment"
         android:label="@string/title_stats"
         tools:layout="@layout/fragment_stats" >
         <argument

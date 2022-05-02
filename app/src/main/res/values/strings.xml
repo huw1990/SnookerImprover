@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Snooker Improver</string>
+    <string name="app_name">SnookerUp</string>
     <string name="title_home">Home</string>
     <string name="title_info">Routine Info</string>
     <string name="title_add_score">Add Score</string>

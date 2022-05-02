@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SnookerImprover" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.SnookerUp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/green_dark</item>
@@ -14,15 +14,15 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SnookerImprover.Fullscreen" parent="Theme.SnookerImprover">
+    <style name="Theme.SnookerUp.Fullscreen" parent="Theme.SnookerUp">
         <item name="android:actionBarStyle">
-            @style/Widget.Theme.SnookerImprover.ActionBar.Fullscreen
+            @style/Widget.Theme.SnookerUp.ActionBar.Fullscreen
         </item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
     </style>
 
-    <style name="ThemeOverlay.SnookerImprover.FullscreenContainer" parent="">
+    <style name="ThemeOverlay.SnookerUp.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/black</item>
         <item name="fullscreenTextColor">@color/white</item>
     </style>
