@@ -20,12 +20,21 @@ import java.util.List;
 public interface ScoreDao {
 
     /**
-     * Get all scores for a particular routine.
+     * Get all scores for a particular routine, ordered by date ascending.
      * @param name The name of the routine
      * @return A list of all scores for that routine
      */
-    @Query("SELECT * FROM RoutineScore WHERE routineName = :name")
+    @Query("SELECT * FROM RoutineScore WHERE routineName = :name ORDER BY dateTime ASC")
     LiveData<List<RoutineScore>> loadAllForRoutine(String name);
+
+    /**
+     * Get all scores for a particular routine since the provided date, ordered by date ascending.
+     * @param name The name of the routine
+     * @param sinceDate The date from which we're interested
+     * @return A list of all scores for that routine since the provided date
+     */
+    @Query("SELECT * FROM RoutineScore WHERE routineName = :name AND dateTime > :sinceDate ORDER BY dateTime ASC")
+    LiveData<List<RoutineScore>> loadAllForRoutineSinceData(String name, Date sinceDate);
 
     /**
      * Get the number of times a routine has been attempted by the user.

@@ -22,8 +22,8 @@ import com.huwdunnit.snookerimprover.databinding.FragmentStatsBinding;
 import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineHandler;
 import com.huwdunnit.snookerimprover.ui.common.RoutineChangeCallback;
 import com.huwdunnit.snookerimprover.ui.stats.allscores.RoutineScoresListActivity;
+import com.huwdunnit.snookerimprover.ui.stats.graph.StatsGraphActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,8 +45,6 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
 
     private int startingRoutineNumber = 0;
 
-    private List<Integer> statsPeriodsDays = new ArrayList<>();
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         statsViewModel = new ViewModelProvider(this).get(StatsViewModel.class);
@@ -54,14 +52,9 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
         binding = FragmentStatsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Take the time periods as strings, parse as ints, then set in a List
-        Log.d(TAG, "Parsing time period strings");
-        String[] statsPeriods = getContext().getResources().getStringArray(R.array.time_periods_numbers);
-        for (String statsPeriod : statsPeriods) {
-            statsPeriodsDays.add(Integer.parseInt(statsPeriod));
-        }
-
         Log.d(TAG, "Setting required values from String resources. Also DB repo");
+        List<DaysToView> daysAndLabels = DaysToView.constructListOfValues(getContext());
+        statsViewModel.setDaysToViewOptions(daysAndLabels);
         statsViewModel.setUnknownLabel(getContext().getString(R.string.unknown_label));
         statsViewModel.setLoadingLabel(getContext().getString(R.string.loading_label));
         statsViewModel.setNoPreviousAttemptsLabel(getContext().getString(R.string.no_previous_attempts_label));
@@ -73,6 +66,7 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
         statsViewModel.getBestScore().observe(getViewLifecycleOwner(), binding.bestValue::setText);
         statsViewModel.getAverageScore().observe(getViewLifecycleOwner(), binding.averageValue::setText);
         statsViewModel.getHaveAttemptsToView().observe(getViewLifecycleOwner(), binding.viewAllScoresButton::setEnabled);
+        statsViewModel.getHaveAttemptsToView().observe(getViewLifecycleOwner(), binding.viewGraphButton::setEnabled);
 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
@@ -97,6 +91,13 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
             Intent intent = new Intent(getContext(), RoutineScoresListActivity.class);
             intent.putExtra(RoutineScoresListActivity.SELECTED_ROUTINE_ID,
                     routineChangeHandler.getSelectedRoutineNumber());
+            getContext().startActivity(intent);
+        });
+
+        binding.viewGraphButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), StatsGraphActivity.class);
+            intent.putExtra(StatsGraphActivity.ROUTINE_NAME, routineChangeHandler.getSelectedRoutineName());
+            intent.putExtra(StatsGraphActivity.DAYS_TO_VIEW, statsViewModel.getDaysToView());
             getContext().startActivity(intent);
         });
 
@@ -149,7 +150,7 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        statsViewModel.setDaysToView(statsPeriodsDays.get(i));
+        statsViewModel.setDaysToViewIndex(i);
     }
 
     @Override

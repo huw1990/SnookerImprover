@@ -56,6 +56,17 @@ public class RoutineScoreStats {
         return averageScore;
     }
 
+    @Override
+    public String toString() {
+        return "RoutineScoreStats{" +
+                "routineName='" + routineName + '\'' +
+                ", sinceDate=" + sinceDate +
+                ", numberOfAttempts=" + numberOfAttempts +
+                ", bestScore=" + bestScore +
+                ", averageScore=" + averageScore +
+                '}';
+    }
+
     public static class RoutineScoreStatsBuilder {
         private String routineName;
         private Date sinceDate;

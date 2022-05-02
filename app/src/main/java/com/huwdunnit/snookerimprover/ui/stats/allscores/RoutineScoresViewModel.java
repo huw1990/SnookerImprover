@@ -63,7 +63,7 @@ public class RoutineScoresViewModel extends AndroidViewModel implements Multiple
     }
 
     public void setRoutineName(String routineName) {
-        allAttempts = scoreRepository.getAllScoresForRoutine(routineName);
+        allAttempts = scoreRepository.getAllScoresForRoutine(routineName, null);
     }
 
     LiveData<List<RoutineScore>> getAllAttemptsForRoutine() {

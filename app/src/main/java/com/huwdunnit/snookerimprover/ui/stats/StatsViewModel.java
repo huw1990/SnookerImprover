@@ -15,6 +15,7 @@ import com.huwdunnit.snookerimprover.ui.common.ChangeableRoutineViewModel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class StatsViewModel extends ViewModel implements ChangeableRoutineViewModel {
@@ -46,6 +47,11 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
     private volatile String routineName;
 
     private volatile Date sinceDate;
+
+    private volatile DaysToView daysToView;
+
+    /** A list of possible options for days to view that the user can pick. */
+    private List<DaysToView> daysToViewOptions;
 
     public StatsViewModel() {
         super();
@@ -107,11 +113,27 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
         reloadStats();
     }
 
-    public void setDaysToView(int daysToView) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -daysToView);
-        sinceDate = calendar.getTime();
+    public void setDaysToViewOptions(List<DaysToView> daysToViewOptions) {
+        this.daysToViewOptions = daysToViewOptions;
+    }
+
+    /**
+     * Set the index for the days to view selection. Note that this is the list index, not the
+     * actual value.
+     * @param index The list index for the days to view election
+     */
+    public void setDaysToViewIndex(int index) {
+        this.daysToView = daysToViewOptions.get(index);
+        this.sinceDate = daysToView.getDateMinusDaysFromNow();
         reloadStats();
+    }
+
+    /**
+     * Get the currently selected days to view option.
+     * @return The selected days to view
+     */
+    public DaysToView getDaysToView() {
+        return daysToView;
     }
 
     /**

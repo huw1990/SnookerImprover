@@ -68,7 +68,7 @@ public class ScoreRepository {
                 int numAttempts;
                 RoutineScore bestScore;
                 double averageScore;
-                if (sinceDate != null) {
+                if (sinceDate == null) {
                     Log.d(TAG, "Getting stats for all time");
 
                     numAttempts = scoreDao.getNumberOfAttemptsForRoutine(routineName);
@@ -110,14 +110,21 @@ public class ScoreRepository {
     }
 
     /**
-     * Get all scores for a particular routine.
+     * Get all scores for a particular routine, since the provided date (or all time, if a null
+     * sinceDate is provided).
      * @param routineName The name of the routine
+     * @param sinceDate The date from which we're interested. If null, we get all routines without
+     *                  time constraints
      * @return A LiveData object encapsulating a List of RoutineScore objects
      */
-    public LiveData<List<RoutineScore>> getAllScoresForRoutine(String routineName) {
+    public LiveData<List<RoutineScore>> getAllScoresForRoutine(String routineName, Date sinceDate) {
         /* Returning LiveData means the data is loaded asynchronously, so we don't need to
         * execute this query in a thread from the thread pool. */
-        return scoreDao.loadAllForRoutine(routineName);
+        if (sinceDate == null) {
+            return scoreDao.loadAllForRoutine(routineName);
+        } else {
+            return scoreDao.loadAllForRoutineSinceData(routineName, sinceDate);
+        }
     }
 
     /**

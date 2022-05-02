@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SnookerImprover">
         <activity
+            android:name=".ui.stats.graph.StatsGraphActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.stats.allscores.RoutineScoresListActivity"
             android:exported="false" />
         <activity
