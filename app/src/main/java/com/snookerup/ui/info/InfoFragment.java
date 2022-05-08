@@ -2,6 +2,7 @@ package com.snookerup.ui.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,8 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
         });
 
         infoViewModel.getRoutineDesc().observe(getViewLifecycleOwner(), binding.routineDesc::setText);
+        //Allow the user to scroll through the TextView
+        binding.routineDesc.setMovementMethod(new ScrollingMovementMethod());
 
         return root;
     }
