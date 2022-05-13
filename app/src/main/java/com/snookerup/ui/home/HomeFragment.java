@@ -4,16 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.snookerup.R;
-import com.snookerup.adapter.RoutineItemAdapter;
 import com.snookerup.data.Datasource;
 import com.snookerup.databinding.FragmentHomeBinding;
 import com.snookerup.model.Routine;
@@ -40,7 +36,7 @@ public class HomeFragment extends Fragment {
 
         RecyclerView recyclerView = binding.allRoutinesRecyclerView;
         List<Routine> routines = Datasource.getRoutines();
-        recyclerView.setAdapter(new RoutineItemAdapter(getContext(), routines));
+        recyclerView.setAdapter(new RoutineOverviewItemAdapter(getContext(), routines));
         recyclerView.setHasFixedSize(true);
         return root;
     }

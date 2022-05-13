@@ -1,4 +1,4 @@
-package com.snookerup.adapter;
+package com.snookerup.ui.home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.snookerup.R;
 import com.snookerup.model.Routine;
-import com.snookerup.ui.home.HomeFragmentDirections;
 
 import java.util.List;
 
@@ -23,13 +22,13 @@ import java.util.List;
  *
  * @author Huwdunnit
  */
-public class RoutineItemAdapter extends RecyclerView.Adapter<RoutineItemAdapter.ItemViewHolder>{
+public class RoutineOverviewItemAdapter extends RecyclerView.Adapter<RoutineOverviewItemAdapter.ItemViewHolder>{
 
     private final Context context;
 
     private final List<Routine> routines;
 
-    public RoutineItemAdapter(Context context, List<Routine> routines) {
+    public RoutineOverviewItemAdapter(Context context, List<Routine> routines) {
         this.context = context;
         this.routines = routines;
     }
