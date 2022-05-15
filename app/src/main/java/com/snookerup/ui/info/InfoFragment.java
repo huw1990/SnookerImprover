@@ -20,8 +20,6 @@ import com.snookerup.databinding.FragmentInfoBinding;
 import com.snookerup.ui.common.ChangeableRoutineHandler;
 import com.snookerup.ui.common.RoutineChangeCallback;
 
-import java.util.Objects;
-
 /**
  * Fragment for getting more detailed information about a routine.
  *
@@ -34,7 +32,7 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
     // Handler for the common UI components, e.g. the image and spinner to change routine
     private ChangeableRoutineHandler routineChangeHandler;
 
-    private int startingRoutineNumber = 0;
+    private String startingRoutineName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,24 +43,25 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
+                .setActivity(getActivity())
                 .setContext(getContext())
                 .setViewModel(infoViewModel)
                 .setCallback(this)
                 .setSpinner(binding.routineNameSpinner)
                 .setAddScoreButton(binding.buttonAddScore)
                 .setViewStatsButton(binding.buttonViewStats)
-                .setStartingRoutineNumber(startingRoutineNumber)
+                .setStartingRoutineName(startingRoutineName)
                 .createHandler();
         routineChangeHandler.setupHandling();
 
         //Set up LiveData for the fields specific to this fragment
 
-        infoViewModel.getRoutineImageResId().observe(getViewLifecycleOwner(), binding.routineImage::setImageResource);
+        infoViewModel.getRoutineImage().observe(getViewLifecycleOwner(), binding.routineImage::setImageDrawable);
 
         binding.routineImage.setOnClickListener(view -> {
             //When the user clicks on the image of the routine, make it fullscreen
             Intent intent = new Intent(getContext(), FullscreenRoutineImageActivity.class);
-            intent.putExtra(FullscreenRoutineImageActivity.IMAGE_RES_ID, infoViewModel.getRoutineFullScreenImageResId().getValue());
+            intent.putExtra(FullscreenRoutineImageActivity.IMAGE_FILENAME, infoViewModel.getRoutineFullScreenImageFilename().getValue());
             getContext().startActivity(intent);
         });
 
@@ -76,7 +75,7 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startingRoutineNumber = InfoFragmentArgs.fromBundle(getArguments()).getRoutineNumber();
+        startingRoutineName = InfoFragmentArgs.fromBundle(getArguments()).getRoutineName();
     }
 
     @Override
@@ -87,22 +86,22 @@ public class InfoFragment extends Fragment implements RoutineChangeCallback {
     }
 
     @Override
-    public void navigateToStatsScreen(int routineNumber) {
+    public void navigateToStatsScreen(String routineName) {
         InfoFragmentDirections.ActionInfoToStats action = InfoFragmentDirections.actionInfoToStats();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routineName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_info, true).build());
     }
 
     @Override
-    public void navigateToInfoScreen(int routineNumber) {
+    public void navigateToInfoScreen(String routineName) {
         // Do nothing, we're already on the info screen
     }
 
     @Override
-    public void navigateToAddScoreScreen(int routineNumber) {
+    public void navigateToAddScoreScreen(String routineName) {
         InfoFragmentDirections.ActionInfoToAddScore action = InfoFragmentDirections.actionInfoToAddScore();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routineName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_info, true).build());
     }

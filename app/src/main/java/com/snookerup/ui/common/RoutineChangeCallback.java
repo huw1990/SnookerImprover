@@ -9,19 +9,19 @@ public interface RoutineChangeCallback {
 
     /**
      * Navigate to the Stats screen, and show the routine with the selected number.
-     * @param routineNumber The number of the routine to display
+     * @param routineName The name of the routine to display
      */
-    void navigateToStatsScreen(int routineNumber);
+    void navigateToStatsScreen(String routineName);
 
     /**
      * Navigate to the Info screen, and show the routine with the selected number.
-     * @param routineNumber The number of the routine to display
+     * @param routineName The title of the routine to display
      */
-    void navigateToInfoScreen(int routineNumber);
+    void navigateToInfoScreen(String routineName);
 
     /**
      * Navigate to the Add Score screen, and show the routine with the selected number.
-     * @param routineNumber The number of the routine to display
+     * @param routineName The title of the routine to display
      */
-    void navigateToAddScoreScreen(int routineNumber);
+    void navigateToAddScoreScreen(String routineName);
 }

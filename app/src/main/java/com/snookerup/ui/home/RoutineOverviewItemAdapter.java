@@ -1,6 +1,7 @@
 package com.snookerup.ui.home;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,11 @@ public class RoutineOverviewItemAdapter extends RecyclerView.Adapter<RoutineOver
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Routine routine = routines.get(position);
-        holder.getTitleTextView().setText(context.getResources().getString(routine.getStringResourceId()));
-        holder.getRoutineImageView().setImageResource(routine.getImageResourceId());
+        holder.getTitleTextView().setText(routine.getName());
+        Drawable imageDrawable = routine.getLandscapeImage(context.getAssets());
+        holder.getRoutineImageView().setImageDrawable(imageDrawable);
         HomeFragmentDirections.ActionHomeToInfo action = HomeFragmentDirections.actionHomeToInfo();
-        action.setRoutineNumber(position);
+        action.setRoutineName(routine.getName());
         holder.getRootView().setOnClickListener(view -> Navigation.findNavController(view).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_home, true).build()));
     }

@@ -1,6 +1,7 @@
 package com.snookerup.ui.info;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,25 +12,25 @@ import com.snookerup.ui.common.ChangeableRoutineViewModel;
 
 public class InfoViewModel extends ViewModel implements ChangeableRoutineViewModel{
 
-    private final MutableLiveData<Integer> routineImageResId;
+    private final MutableLiveData<Drawable> routineImage;
 
-    private final MutableLiveData<Integer> routineFullScreenImageResId;
+    private final MutableLiveData<String> routineFullScreenImageFilename;
 
     private final MutableLiveData<String> routineDesc;
 
     public InfoViewModel() {
         super();
-        routineImageResId = new MutableLiveData<>();
-        routineFullScreenImageResId = new MutableLiveData<>();
+        routineImage = new MutableLiveData<>();
+        routineFullScreenImageFilename = new MutableLiveData<>();
         routineDesc = new MutableLiveData<>();
     }
 
-    public LiveData<Integer> getRoutineImageResId() {
-        return routineImageResId;
+    public LiveData<Drawable> getRoutineImage() {
+        return routineImage;
     }
 
-    public LiveData<Integer> getRoutineFullScreenImageResId() {
-        return routineFullScreenImageResId;
+    public LiveData<String> getRoutineFullScreenImageFilename() {
+        return routineFullScreenImageFilename;
     }
 
     public LiveData<String> getRoutineDesc() {
@@ -38,14 +39,13 @@ public class InfoViewModel extends ViewModel implements ChangeableRoutineViewMod
 
     @Override
     public void setRoutine(Routine routine, Context context) {
-        routineImageResId.setValue(routine.getImageResourceId());
-        routineFullScreenImageResId.setValue(routine.getFullScreenImageResourceId());
-        String[] routineDescSteps = context.getResources().getStringArray(routine.getDescArrayResourceId());
+        this.routineImage.postValue(routine.getLandscapeImage(context.getAssets()));
+        routineFullScreenImageFilename.postValue(routine.getPortraitImageFileName());
         StringBuilder stepsBuilder = new StringBuilder();
-        for (String step : routineDescSteps) {
+        for (String step : routine.getDescriptionLines()) {
             stepsBuilder.append(step);
             stepsBuilder.append("\n\n");
         }
-        routineDesc.setValue(stepsBuilder.toString());
+        routineDesc.postValue(stepsBuilder.toString());
     }
 }

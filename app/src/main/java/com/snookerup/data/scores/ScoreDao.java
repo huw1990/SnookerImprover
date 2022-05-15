@@ -1,4 +1,4 @@
-package com.snookerup.data;
+package com.snookerup.data.scores;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

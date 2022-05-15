@@ -13,10 +13,8 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.snookerup.R;
-import com.snookerup.data.Datasource;
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.databinding.ActivityRoutineScoresListBinding;
-import com.snookerup.model.Routine;
 import com.snookerup.model.RoutineScore;
 
 import java.util.Set;
@@ -29,7 +27,7 @@ import java.util.Set;
 public class RoutineScoresListActivity extends AppCompatActivity {
 
     /** Key to get the routine we want to load. */
-    public static final String SELECTED_ROUTINE_ID = "com.snookerup.SELECTED_ROUTINE_ID";
+    public static final String SELECTED_ROUTINE_NAME = "com.snookerup.SELECTED_ROUTINE_NAME";
 
     private static final String TAG = RoutineScoresListActivity.class.getName();
 
@@ -72,9 +70,7 @@ public class RoutineScoresListActivity extends AppCompatActivity {
         attemptsViewModel.setSelectedString(getString(R.string.selected_label));
 
         Intent intent = getIntent();
-        int routineNumber = intent.getIntExtra(SELECTED_ROUTINE_ID, 0);
-        Routine routine = Datasource.getRoutines().get(routineNumber);
-        String routineName = getString(routine.getStringResourceId());
+        String routineName = intent.getStringExtra(SELECTED_ROUTINE_NAME);
         attemptsViewModel.setRoutineName(routineName);
         setTitle(routineName);
 

@@ -19,7 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.snookerup.R;
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.databinding.FragmentAddScoreBinding;
 import com.snookerup.model.RoutineScore;
 import com.snookerup.ui.common.ChangeableRoutineHandler;
@@ -43,7 +43,7 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
     // Handler for the common UI components, e.g. the image and spinner to change routine
     private ChangeableRoutineHandler routineChangeHandler;
 
-    private int startingRoutineNumber = 0;
+    private String startingRoutineTitle;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,13 +54,14 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
+                .setActivity(getActivity())
                 .setContext(getContext())
                 .setViewModel(addScoreViewModel)
                 .setCallback(this)
                 .setSpinner(binding.routineNameSpinner)
                 .setViewInfoButton(binding.buttonViewInfo)
                 .setViewStatsButton(binding.buttonViewStats)
-                .setStartingRoutineNumber(startingRoutineNumber)
+                .setStartingRoutineName(startingRoutineTitle)
                 .createHandler();
         routineChangeHandler.setupHandling();
 
@@ -134,7 +135,7 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startingRoutineNumber = AddScoreFragmentArgs.fromBundle(getArguments()).getRoutineNumber();
+        startingRoutineTitle = AddScoreFragmentArgs.fromBundle(getArguments()).getRoutineName();
     }
 
     @Override
@@ -145,23 +146,23 @@ public class AddScoreFragment extends Fragment implements RoutineChangeCallback 
     }
 
     @Override
-    public void navigateToStatsScreen(int routineNumber) {
+    public void navigateToStatsScreen(String routineName) {
         AddScoreFragmentDirections.ActionAddScoreToStats action = AddScoreFragmentDirections.actionAddScoreToStats();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routineName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_add_score, true).build());
     }
 
     @Override
-    public void navigateToInfoScreen(int routineNumber) {
+    public void navigateToInfoScreen(String routinName) {
         AddScoreFragmentDirections.ActionAddScoreToInfo action = AddScoreFragmentDirections.actionAddScoreToInfo();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routinName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_add_score, true).build());
     }
 
     @Override
-    public void navigateToAddScoreScreen(int routineNumber) {
+    public void navigateToAddScoreScreen(String routineName) {
         // Do nothing, we're already on the add score screen
     }
 }

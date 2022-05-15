@@ -1,10 +1,11 @@
-package com.snookerup.data;
+package com.snookerup.data.scores;
 
 import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.snookerup.data.AppDatabase;
 import com.snookerup.model.RoutineScore;
 import com.snookerup.model.RoutineScoreStats;
 

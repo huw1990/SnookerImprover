@@ -16,7 +16,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.snookerup.R;
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.databinding.ActivityStatsGraphBinding;
 import com.snookerup.model.DateAndTime;
 import com.snookerup.model.RoutineScore;

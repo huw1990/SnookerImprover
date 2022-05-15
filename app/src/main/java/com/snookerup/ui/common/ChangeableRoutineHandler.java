@@ -1,15 +1,17 @@
 package com.snookerup.ui.common;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.snookerup.R;
-import com.snookerup.data.Datasource;
-import com.snookerup.model.Routine;
+import com.snookerup.data.routines.RoutineRepository;
+
+import java.util.List;
 
 /**
  * Handles the changing of the selected routine on a fragment.
@@ -17,6 +19,8 @@ import com.snookerup.model.Routine;
  * @author Huwdunnit
  */
 public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListener {
+
+    private static final String TAG = ChangeableRoutineHandler.class.getName();
 
     private final Context context;
 
@@ -32,16 +36,23 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
 
     private final Button viewInfoButton;
 
-    private int routineNumber = 0;
+    private final RoutineRepository routineRepository;
+
+    private final Activity activity;
+
+    private List<String> allRoutineNames;
+
+    private String selectedRoutineName;
 
     /**
      * Private constructor, to prevent direct instantiation (the internal HandlerBuilder should be
      * used instead).
      */
-    private ChangeableRoutineHandler(Context context, ChangeableRoutineViewModel viewModel,
+    private ChangeableRoutineHandler(Activity activity, Context context, ChangeableRoutineViewModel viewModel,
                                      RoutineChangeCallback callback, Spinner spinner,
                                      Button addScoreButton, Button viewStatsButton,
-                                     Button viewInfoButton, int startingRoutineNumber) {
+                                     Button viewInfoButton, String selectedRoutineTitle) {
+        this.activity = activity;
         this.context = context;
         this.viewModel = viewModel;
         this.callback = callback;
@@ -49,61 +60,70 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         this.addScoreButton = addScoreButton;
         this.viewStatsButton = viewStatsButton;
         this.viewInfoButton = viewInfoButton;
-        this.routineNumber = startingRoutineNumber;
+        this.selectedRoutineName = selectedRoutineTitle;
+        this.routineRepository = new RoutineRepository(context);
     }
 
     /**
-     * Get the name of the currently selected routine.
-     * @return The name of the selected routine
+     * Get the title of the currently selected routine.
+     * @return The title of the selected routine
      */
     public String getSelectedRoutineName() {
-        return context.getResources().getString(Datasource.getRoutines().get(routineNumber).getStringResourceId());
-    }
-
-    /**
-     * Get the number of the currently selected routine, i.e. the position in the list of Routines
-     * returned from {@link Datasource#getRoutines()}.
-     * @return The routine number
-     */
-    public int getSelectedRoutineNumber() {
-        return routineNumber;
+        return selectedRoutineName;
     }
 
     public void setupHandling() {
-        //Set up the Spinner for selecting the routine
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.all_routine_names, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
         //Add on-click listeners for the two buttons
         if (addScoreButton != null) {
-            addScoreButton.setOnClickListener(view -> callback.navigateToAddScoreScreen(routineNumber));
+            addScoreButton.setOnClickListener(view -> callback.navigateToAddScoreScreen(selectedRoutineName));
         }
         if (viewStatsButton != null) {
-            viewStatsButton.setOnClickListener(view -> callback.navigateToStatsScreen(routineNumber));
+            viewStatsButton.setOnClickListener(view -> callback.navigateToStatsScreen(selectedRoutineName));
         }
         if (viewInfoButton != null) {
-            viewInfoButton.setOnClickListener(view -> callback.navigateToInfoScreen(routineNumber));
+            viewInfoButton.setOnClickListener(view -> callback.navigateToInfoScreen(selectedRoutineName));
         }
 
-        //Set the routine; either the default routine or the one passed in
-        updateRoutine();
+        routineRepository.getAllRoutineNames(routines -> {
+            this.allRoutineNames = routines;
+            if (this.selectedRoutineName == null) {
+                //Default the selected routine to the first in the list, so we have something to set the spinner to
+                this.selectedRoutineName = allRoutineNames.get(0);
+            }
+            //Set up the Spinner for selecting the routine
+            spinner.setOnItemSelectedListener(this);
+            ArrayAdapter<String> adapter = new ArrayAdapter(context,
+                    android.R.layout.simple_spinner_item, allRoutineNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            //Set the routine; either the default routine or the one passed in
+            updateRoutine();
+        }, ex -> {
+            Log.e(TAG, "Can't get all routine titles, ex=" + ex);
+            ex.printStackTrace();
+        });
     }
 
     /**
      * Update the routine to the routine matching the member routineNumber variable.
      */
     private void updateRoutine() {
-        Routine routine = Datasource.getRoutines().get(routineNumber);
-        spinner.setSelection(routineNumber);
-        viewModel.setRoutine(routine, context);
+        routineRepository.getRoutineFromName(selectedRoutineName, routine -> {
+            int indexOfName = allRoutineNames.indexOf(selectedRoutineName);
+            activity.runOnUiThread(() -> {
+                spinner.setSelection(indexOfName);
+                viewModel.setRoutine(routine, context);
+            });
+        }, ex -> {
+            Log.e(TAG, "Can't get all routine from name=" + selectedRoutineName + ", ex=" + ex);
+            ex.printStackTrace();
+        });
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        this.routineNumber = i;
+        this.selectedRoutineName = allRoutineNames.get(i);
         updateRoutine();
     }
 
@@ -118,6 +138,7 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
      * @author Huwdunnit
      */
     public static class HandlerBuilder {
+        Activity activity;
         Context context;
         ChangeableRoutineViewModel viewModel;
         RoutineChangeCallback callback;
@@ -125,7 +146,12 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
         Button addScoreButton;
         Button viewStatsButton;
         Button viewInfoButton;
-        int startingRoutineNumber;
+        String startingRoutineName;
+
+        public ChangeableRoutineHandler.HandlerBuilder setActivity(Activity activity) {
+            this.activity = activity;
+            return this;
+        }
 
         public ChangeableRoutineHandler.HandlerBuilder setContext(Context context) {
             this.context = context;
@@ -162,14 +188,14 @@ public class ChangeableRoutineHandler implements AdapterView.OnItemSelectedListe
             return this;
         }
 
-        public ChangeableRoutineHandler.HandlerBuilder setStartingRoutineNumber(int startingRoutineNumber) {
-            this.startingRoutineNumber = startingRoutineNumber;
+        public ChangeableRoutineHandler.HandlerBuilder setStartingRoutineName(String startingRoutineName) {
+            this.startingRoutineName = startingRoutineName;
             return this;
         }
 
         public ChangeableRoutineHandler createHandler() {
-            return new ChangeableRoutineHandler(context, viewModel, callback, spinner,
-                    addScoreButton, viewStatsButton, viewInfoButton, startingRoutineNumber);
+            return new ChangeableRoutineHandler(activity, context, viewModel, callback, spinner,
+                    addScoreButton, viewStatsButton, viewInfoButton, startingRoutineName);
         }
     }
 }

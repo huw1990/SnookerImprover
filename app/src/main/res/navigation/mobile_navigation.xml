@@ -21,9 +21,10 @@
         android:label="@string/title_info"
         tools:layout="@layout/fragment_info" >
         <argument
-            android:name="routine_number"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="routine_name"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_info_to_stats"
             app:destination="@id/navigation_stats"
@@ -40,9 +41,10 @@
         android:label="@string/title_add_score"
         tools:layout="@layout/fragment_add_score" >
         <argument
-            android:name="routine_number"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="routine_name"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_add_score_to_info"
             app:destination="@id/navigation_info" />
@@ -56,9 +58,10 @@
         android:label="@string/title_stats"
         tools:layout="@layout/fragment_stats" >
         <argument
-            android:name="routine_number"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="routine_name"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_stats_to_info"
             app:destination="@id/navigation_info" />

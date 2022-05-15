@@ -5,14 +5,17 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
 
 import com.snookerup.databinding.ActivityFullscreenRoutineImageBinding;
+import com.snookerup.model.Routine;
 
 /**
  * A full-screen activity used to display a more detailed version of a practice routine. Based
@@ -23,7 +26,9 @@ import com.snookerup.databinding.ActivityFullscreenRoutineImageBinding;
  */
 public class FullscreenRoutineImageActivity extends AppCompatActivity {
 
-    public static final String IMAGE_RES_ID = "com.snookerup.IMAGE_RES_ID";
+    public static final String IMAGE_FILENAME = "com.snookerup.IMAGE_FILENAME";
+
+    private static final String TAG = FullscreenRoutineImageActivity.class.getName();
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -134,7 +139,13 @@ public class FullscreenRoutineImageActivity extends AppCompatActivity {
         binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
 
         // Set the full screen content to the image resource ID passed in the Intent
-        binding.fullscreenContent.setImageResource(getIntent().getIntExtra(IMAGE_RES_ID, -1));
+        Drawable imageDrawable = Routine.getDrawableForFilePath(getAssets(), getIntent().getStringExtra(IMAGE_FILENAME));
+        if (imageDrawable == null) {
+            Log.e(TAG, "No fullscreen resource found, finishing activity");
+            finish();
+        } else {
+            binding.fullscreenContent.setImageDrawable(imageDrawable);
+        }
     }
 
     @Override

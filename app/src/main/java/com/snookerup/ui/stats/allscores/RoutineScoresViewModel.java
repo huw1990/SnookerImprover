@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.model.RoutineScore;
 
 import java.util.HashSet;

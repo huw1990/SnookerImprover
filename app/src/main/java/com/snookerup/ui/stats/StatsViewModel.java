@@ -7,13 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.model.Routine;
 import com.snookerup.model.RoutineScore;
 import com.snookerup.ui.common.ChangeableRoutineViewModel;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -101,7 +100,7 @@ public class StatsViewModel extends ViewModel implements ChangeableRoutineViewMo
     @Override
     public void setRoutine(Routine routine, Context context) {
         synchronized (this) {
-            this.routineName = context.getResources().getString(routine.getStringResourceId());
+            this.routineName = routine.getName();
         }
         //Routine changed, so check if we have any scores ever for this routine
         scoreRepository.haveAnyScoresForRoutine(routineName, haveRoutines -> {

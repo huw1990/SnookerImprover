@@ -17,7 +17,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.snookerup.R;
-import com.snookerup.data.ScoreRepository;
+import com.snookerup.data.scores.ScoreRepository;
 import com.snookerup.databinding.FragmentStatsBinding;
 import com.snookerup.ui.common.ChangeableRoutineHandler;
 import com.snookerup.ui.common.RoutineChangeCallback;
@@ -43,7 +43,7 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
     // Handler for the common UI components, e.g. the image and spinner to change routine
     private ChangeableRoutineHandler routineChangeHandler;
 
-    private int startingRoutineNumber = 0;
+    private String startingRoutineTitle;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,13 +70,14 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
 
         //Set up the common handler for being able to change the routine with a dropdown
         routineChangeHandler = new ChangeableRoutineHandler.HandlerBuilder()
+                .setActivity(getActivity())
                 .setContext(getContext())
                 .setViewModel(statsViewModel)
                 .setCallback(this)
                 .setSpinner(binding.routineNameSpinner)
                 .setAddScoreButton(binding.buttonAddScore)
                 .setViewInfoButton(binding.buttonViewInfo)
-                .setStartingRoutineNumber(startingRoutineNumber)
+                .setStartingRoutineName(startingRoutineTitle)
                 .createHandler();
         routineChangeHandler.setupHandling();
 
@@ -89,8 +90,8 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
 
         binding.viewAllScoresButton.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), RoutineScoresListActivity.class);
-            intent.putExtra(RoutineScoresListActivity.SELECTED_ROUTINE_ID,
-                    routineChangeHandler.getSelectedRoutineNumber());
+            intent.putExtra(RoutineScoresListActivity.SELECTED_ROUTINE_NAME,
+                    routineChangeHandler.getSelectedRoutineName());
             getContext().startActivity(intent);
         });
 
@@ -107,7 +108,7 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startingRoutineNumber = StatsFragmentArgs.fromBundle(getArguments()).getRoutineNumber();
+        startingRoutineTitle = StatsFragmentArgs.fromBundle(getArguments()).getRoutineName();
     }
 
     @Override
@@ -128,22 +129,22 @@ public class StatsFragment extends Fragment implements RoutineChangeCallback,
     }
 
     @Override
-    public void navigateToStatsScreen(int routineNumber) {
+    public void navigateToStatsScreen(String routineName) {
         // Do nothing, we're already on the info screen
     }
 
     @Override
-    public void navigateToInfoScreen(int routineNumber) {
+    public void navigateToInfoScreen(String routineName) {
         StatsFragmentDirections.ActionStatsToInfo action = StatsFragmentDirections.actionStatsToInfo();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routineName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_stats, true).build());
     }
 
     @Override
-    public void navigateToAddScoreScreen(int routineNumber) {
+    public void navigateToAddScoreScreen(String routineName) {
         StatsFragmentDirections.ActionStatsToAddScore action = StatsFragmentDirections.actionStatsToAddScore();
-        action.setRoutineNumber(routineNumber);
+        action.setRoutineName(routineName);
         Navigation.findNavController(requireView()).navigate(action,
                 new NavOptions.Builder().setPopUpTo(R.id.navigation_stats, true).build());
     }

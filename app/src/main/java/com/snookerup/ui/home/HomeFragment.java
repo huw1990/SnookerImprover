@@ -1,16 +1,18 @@
 package com.snookerup.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.snookerup.data.Datasource;
+import com.snookerup.data.routines.RoutineRepository;
 import com.snookerup.databinding.FragmentHomeBinding;
 import com.snookerup.model.Routine;
 
@@ -22,6 +24,8 @@ import java.util.List;
  * @author Huwdunnit
  */
 public class HomeFragment extends Fragment {
+
+    private static final String TAG = HomeFragment.class.getName();
 
     private FragmentHomeBinding binding;
 
@@ -35,9 +39,15 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         RecyclerView recyclerView = binding.allRoutinesRecyclerView;
-        List<Routine> routines = Datasource.getRoutines();
-        recyclerView.setAdapter(new RoutineOverviewItemAdapter(getContext(), routines));
         recyclerView.setHasFixedSize(true);
+
+        RoutineRepository routineRepository = new RoutineRepository(getContext());
+        LiveData<List<Routine>> liveDataRoutines = routineRepository.getAllRoutines();
+        //When data is received in LiveData, update the recycler view
+        liveDataRoutines.observe(getViewLifecycleOwner(), routines -> {
+            Log.d(TAG, "Routines set in LiveData, routines=" + routines);
+            recyclerView.setAdapter(new RoutineOverviewItemAdapter(getContext(), routines));
+        });
         return root;
     }
 

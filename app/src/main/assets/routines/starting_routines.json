@@ -1,0 +1,53 @@
+{
+  "routines": [
+    {
+      "id": 1,
+      "name": "The Line Up",
+      "description_lines": [
+        "Arrange all reds in a line up the middle of the table, in line with the blue, pink, and black spots.",
+        "Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.",
+        "Can you clear the table?"
+      ],
+      "image_ref": "line_up"
+    },
+    {
+      "id": 2,
+      "name": "The T Line Up",
+      "description_lines": [
+        "Arrange the reds in three lines of five reds, first between pink and black, then either side of the pink, to form a \"T\" shape.",
+        "Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.",
+        "In this routine, all reds are nearer the pink and black, so this replicates what you might see in a match, more than the Line Up would.",
+        "Can you clear the table?"
+      ],
+      "image_ref": "t_line_up"
+    },
+    {
+      "id": 3,
+      "name": "The 10 Red T Line Up",
+      "description_lines": [
+        "A slight variation on the T Line Up. Put four reds in a line between pink and black, then three either side of the pink, to make 10 reds in total.",
+        "Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.",
+        "Can you clear the table?"
+      ],
+      "image_ref": "10_red_t_line_up"
+    },
+    {
+      "id": 4,
+      "name": "The 7 Red T Line Up",
+      "description_lines": [
+        "A slight variation on the T Line Up. Put three reds in a line between pink and black, then two either side of the pink, to make seven reds in total.",
+        "Pot the balls in order (i.e. red, colour, red, and so on), trying to make as high a break as possible.",
+        "Can you clear the table?"
+      ],
+      "image_ref": "7_red_t_line_up"
+    },
+    {
+      "id": 5,
+      "name": "Clearing The Colours",
+      "description_lines": [
+        "Put all colours on their spots, then try to clear them in order, i.e. yellow, green, brown, blue, pink, black."
+      ],
+      "image_ref": "clearing_colours"
+    }
+  ]
+}
